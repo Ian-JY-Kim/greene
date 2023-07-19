@@ -198,16 +198,38 @@ def min_obj(theta, Z):
     Z_2_value = Z_2(xi_1_star, xi_2_star, x_1, x_2, w_1, w_2)
     return Z_1_value**2 + Z_2_value**2
 
-initial_point = [0,0]
-bnds = ((-1.0, 1.0), (-1.0, 1.0))
-res = minimize(min_obj, initial_point, args = sample_data.values[0][0:4], method="Nelder-Mead", bounds=bnds, options = {'maxiter': 300})
 
 
-# save the result
-print(job_num)
-print(res.x[0])
-print(res.x[1])
-txt_file = open("test.txt", "a")
-txt_file.write("%d\t%f\t%f\n" %(job_num, res.x[0], res.x[1]))
-txt_file.close()
+try:
+    initial_point = [0,0]
+    bnds = ((-1.0, 1.0), (-1.0, 1.0))
+    res = minimize(min_obj, initial_point, args = sample_data.values[0][0:4], method="Nelder-Mead", bounds=bnds, options = {'maxiter': 300})
+
+    # save the result
+    print(job_num)
+    print(res.x[0])
+    print(res.x[1])
+
+    # make a new file
+    # write down the result 
+    # close the file
+    file_name = "./result/test"+str(job_num)+".txt"
+    txt_file = open(file_name, "w")
+    txt_file.write("%d\t%f\t%f\n" %(job_num, res.x[0], res.x[1]))
+    txt_file.close()
+
+    # txt_file = open("test.txt", "a")
+    # txt_file.write("%d\t%f\t%f\n" %(job_num, res.x[0], res.x[1]))
+    # txt_file.close()
+
+except: 
+    file_name = "./result/test"+str(job_num)+".txt"
+    txt_file = open(file_name, "w")
+    txt_file.write("%d\t%f\t%f\n" %(job_num, 100, 100))   # if something went wrong, code will return 100 as the equilibrium xi^star
+    txt_file.close()
+
+
+
+
+
 
