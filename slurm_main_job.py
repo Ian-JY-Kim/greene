@@ -15,6 +15,7 @@ from itertools import product
 
 # get the job number from the slurm
 job_num = int(sys.argv[1])
+# job_num = 1
 
 # define predetermined values
 market_num = 400 
