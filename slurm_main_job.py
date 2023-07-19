@@ -32,10 +32,11 @@ gamma = 0.5
 
 # get the working data
 MC_master_data = pd.read_csv("MC_master_data_0716.csv")
+MC_master_data = MC_master_data[['x_1', 'x_2', 'w_1', 'w_2', 'job_array_num']]
 sample_data = MC_master_data.loc[MC_master_data['job_array_num'] == job_num]
 
 # get the Z information
-x_1, x_2, w_1, w_2 = sample_data.values[0][1:5]
+x_1, x_2, w_1, w_2 = sample_data.values[0][0:4]
 
 
 
@@ -198,10 +199,13 @@ def min_obj(theta, Z):
 
 initial_point = [0,0]
 bnds = ((-1.0, 1.0), (-1.0, 1.0))
-res = minimize(min_obj, initial_point, args = sample_data.values[0][1:5], method="Nelder-Mead", bounds=bnds, options = {'maxiter': 300})
+res = minimize(min_obj, initial_point, args = sample_data.values[0][0:4], method="Nelder-Mead", bounds=bnds, options = {'maxiter': 300})
 
 
 # save the result
+print(job_num)
+print(res.x[0])
+print(res.x[1])
 txt_file = open("test.txt", "a")
 txt_file.write("%d\t%f\t%f\n" %(job_num, res.x[0], res.x[1]))
 txt_file.close()
