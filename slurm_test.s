@@ -11,5 +11,5 @@
 module purge
 module load python/intel/3.8.6
 
-cd /scratch/jk7362/greene
+cd /home/jk7362/greene
 python slurm_test.py $SLURM_ARRAY_TASK_ID
