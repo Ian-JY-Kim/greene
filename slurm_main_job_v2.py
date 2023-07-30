@@ -107,18 +107,18 @@ for job_num in range(start_num, end_num+1):
         prob_good = 1/2
         prob_bad = 1/2
         #calculate monopoly profit
-        pi_mono_good = monopoly(x, w, xi, -0.35)[0]
-        pi_mono_bad  = monopoly(x, w, xi,  0.05)[0]
+        pi_mono_good = monopoly(x, w, xi, -0.05)[0]
+        pi_mono_bad  = monopoly(x, w, xi,  0.35)[0]
         #return expected monopoly profit
         return prob_good*pi_mono_good + prob_bad*pi_mono_bad
 
     def EXP_pi_duo_f1_trapz(x_1, x_2, w_1, w_2, xi_1, xi_2_star):
         xi_2_vec = np.linspace(xi_2_star,3,100)
         vec_duo = np.vectorize(duopoly)
-        trapz_fun1 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec,-0.35, 0.05)[0] * norm.pdf(xi_2_vec, 0, 0.5)
-        trapz_fun2 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec,-0.35,-0.35)[0] * norm.pdf(xi_2_vec, 0, 0.5)
-        trapz_fun3 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec, 0.05, 0.05)[0] * norm.pdf(xi_2_vec, 0, 0.5)
-        trapz_fun4 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec, 0.05,-0.35)[0] * norm.pdf(xi_2_vec, 0, 0.5)
+        trapz_fun1 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec,-0.05, 0.35)[0] * norm.pdf(xi_2_vec, 0, 0.5)
+        trapz_fun2 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec,-0.05,-0.05)[0] * norm.pdf(xi_2_vec, 0, 0.5)
+        trapz_fun3 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec, 0.35, 0.35)[0] * norm.pdf(xi_2_vec, 0, 0.5)
+        trapz_fun4 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec, 0.35,-0.05)[0] * norm.pdf(xi_2_vec, 0, 0.5)
         
         trapz_sum = 0
         for i in range(1,100):
@@ -135,10 +135,10 @@ for job_num in range(start_num, end_num+1):
     def EXP_pi_duo_f2_trapz(x_1, x_2, w_1, w_2, xi_1_star, xi_2):
         xi_1_vec = np.linspace(xi_1_star,3,100)
         vec_duo = np.vectorize(duopoly)
-        trapz_fun1 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2,-0.35, 0.05)[1] * norm.pdf(xi_1_vec, 0.1, 0.5)
-        trapz_fun2 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2,-0.35,-0.35)[1] * norm.pdf(xi_1_vec, 0.1, 0.5)
-        trapz_fun3 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2, 0.05, 0.05)[1] * norm.pdf(xi_1_vec, 0.1, 0.5)
-        trapz_fun4 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2, 0.05,-0.35)[1] * norm.pdf(xi_1_vec, 0.1, 0.5)
+        trapz_fun1 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2,-0.05, 0.35)[1] * norm.pdf(xi_1_vec, 0.1, 0.5)
+        trapz_fun2 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2,-0.05,-0.05)[1] * norm.pdf(xi_1_vec, 0.1, 0.5)
+        trapz_fun3 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2, 0.35, 0.35)[1] * norm.pdf(xi_1_vec, 0.1, 0.5)
+        trapz_fun4 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2, 0.35,-0.05)[1] * norm.pdf(xi_1_vec, 0.1, 0.5)
         
         trapz_sum = 0
         for i in range(1,100):
