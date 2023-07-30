@@ -18,7 +18,7 @@ job_num_seed = int(sys.argv[1])
 end_num = job_num_seed * 5
 start_num = end_num - 4
 
-MC_master_data = pd.read_csv("MC_master_data_0716.csv")
+MC_master_data = pd.read_csv("MC_master_data_0730.csv")
 MC_master_data = MC_master_data[['x_1', 'x_2', 'w_1', 'w_2', 'job_array_num']]
 
 for job_num in range(start_num, end_num+1):
