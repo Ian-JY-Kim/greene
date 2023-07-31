@@ -118,7 +118,7 @@ for job_num in range(start_num, end_num+1):
         return prob_good*pi_mono_good + prob_bad*pi_mono_bad
 
     def EXP_pi_duo_f1_trapz(x_1, x_2, w_1, w_2, xi_1, xi_2_star):
-        xi_2_vec = np.linspace(xi_2_star,3,100)
+        xi_2_vec = np.linspace(xi_2_star, 3 + mu_xi_2, 100)
         vec_duo = np.vectorize(duopoly)
         trapz_fun1 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec,-0.5, 0.5)[0] * norm.pdf(xi_2_vec, mu_xi_2, 0.5)
         trapz_fun2 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec,-0.5,-0.5)[0] * norm.pdf(xi_2_vec, mu_xi_2, 0.5)
@@ -138,7 +138,7 @@ for job_num in range(start_num, end_num+1):
         return trapz_sum 
 
     def EXP_pi_duo_f2_trapz(x_1, x_2, w_1, w_2, xi_1_star, xi_2):
-        xi_1_vec = np.linspace(xi_1_star,4,100)
+        xi_1_vec = np.linspace(xi_1_star, 3 + mu_xi_1, 100)
         vec_duo = np.vectorize(duopoly)
         trapz_fun1 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2,-0.5, 0.5)[1] * norm.pdf(xi_1_vec, mu_xi_1, 0.5)
         trapz_fun2 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2,-0.5,-0.5)[1] * norm.pdf(xi_1_vec, mu_xi_1, 0.5)
