@@ -15,10 +15,12 @@ from itertools import product
 
 # get the job number from the slurm
 job_num_seed = int(sys.argv[1])
-end_num = job_num_seed * 35
-start_num = end_num - 34
+num_duty_per_job = 4
 
-MC_master_data = pd.read_csv("MC_master_data_0730.csv")
+end_num = job_num_seed * num_duty_per_job
+start_num = end_num - (num_duty_per_job - 1)
+
+MC_master_data = pd.read_csv("MC_master_data.csv")
 MC_master_data = MC_master_data[['x_1', 'x_2', 'w_1', 'w_2', 'job_array_num']]
 
 for job_num in range(start_num, end_num+1):
@@ -26,13 +28,16 @@ for job_num in range(start_num, end_num+1):
     # define predetermined values
     epsilon = 0.0000000001
 
-    #define parameters
-    #define parameters
+    # define parameters
     kappa_1 = 0.8
     kappa_2 = 0.8
     alpha = 1
     beta = 0.5
     gamma = 0.2
+
+    # define mu of xi's 
+    mu_xi_1 = 0.2
+    mu_xi_2 = 0
 
     # get the working data    
     sample_data = MC_master_data.loc[MC_master_data['job_array_num'] == job_num]
@@ -115,10 +120,10 @@ for job_num in range(start_num, end_num+1):
     def EXP_pi_duo_f1_trapz(x_1, x_2, w_1, w_2, xi_1, xi_2_star):
         xi_2_vec = np.linspace(xi_2_star,3,100)
         vec_duo = np.vectorize(duopoly)
-        trapz_fun1 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec,-0.5, 0.5)[0] * norm.pdf(xi_2_vec, 0, 0.5)
-        trapz_fun2 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec,-0.5,-0.5)[0] * norm.pdf(xi_2_vec, 0, 0.5)
-        trapz_fun3 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec, 0.5, 0.5)[0] * norm.pdf(xi_2_vec, 0, 0.5)
-        trapz_fun4 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec, 0.5,-0.5)[0] * norm.pdf(xi_2_vec, 0, 0.5)
+        trapz_fun1 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec,-0.5, 0.5)[0] * norm.pdf(xi_2_vec, mu_xi_2, 0.5)
+        trapz_fun2 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec,-0.5,-0.5)[0] * norm.pdf(xi_2_vec, mu_xi_2, 0.5)
+        trapz_fun3 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec, 0.5, 0.5)[0] * norm.pdf(xi_2_vec, mu_xi_2, 0.5)
+        trapz_fun4 = vec_duo(x_1, x_2, w_1, w_2, xi_1, xi_2_vec, 0.5,-0.5)[0] * norm.pdf(xi_2_vec, mu_xi_2, 0.5)
         
         trapz_sum = 0
         for i in range(1,100):
@@ -135,10 +140,10 @@ for job_num in range(start_num, end_num+1):
     def EXP_pi_duo_f2_trapz(x_1, x_2, w_1, w_2, xi_1_star, xi_2):
         xi_1_vec = np.linspace(xi_1_star,4,100)
         vec_duo = np.vectorize(duopoly)
-        trapz_fun1 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2,-0.5, 0.5)[1] * norm.pdf(xi_1_vec, 0.8, 0.5)
-        trapz_fun2 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2,-0.5,-0.5)[1] * norm.pdf(xi_1_vec, 0.8, 0.5)
-        trapz_fun3 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2, 0.5, 0.5)[1] * norm.pdf(xi_1_vec, 0.8, 0.5)
-        trapz_fun4 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2, 0.5,-0.5)[1] * norm.pdf(xi_1_vec, 0.8, 0.5)
+        trapz_fun1 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2,-0.5, 0.5)[1] * norm.pdf(xi_1_vec, mu_xi_1, 0.5)
+        trapz_fun2 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2,-0.5,-0.5)[1] * norm.pdf(xi_1_vec, mu_xi_1, 0.5)
+        trapz_fun3 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2, 0.5, 0.5)[1] * norm.pdf(xi_1_vec, mu_xi_1, 0.5)
+        trapz_fun4 = vec_duo(x_1, x_2, w_1, w_2, xi_1_vec, xi_2, 0.5,-0.5)[1] * norm.pdf(xi_1_vec, mu_xi_1, 0.5)
         
         trapz_sum = 0
         for i in range(1,100):
@@ -156,7 +161,7 @@ for job_num in range(start_num, end_num+1):
 
     def Z_1(xi_1_star, xi_2_star, x_1, x_2, w_1, w_2):
         # distribution of xi_2
-        mu = 0
+        mu = mu_xi_2
         sigma = 0.5
 
         # calculate cdf in needs
@@ -172,7 +177,7 @@ for job_num in range(start_num, end_num+1):
 
     def Z_2(xi_1_star, xi_2_star, x_1, x_2, w_1, w_2):
         # distribution of xi_1
-        mu = 0.8
+        mu = mu_xi_1
         sigma = 0.5
 
         # calculate cdf in needs
