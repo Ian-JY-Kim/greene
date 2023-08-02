@@ -15,7 +15,7 @@ from itertools import product
 
 # get the job number from the slurm
 job_num_seed = int(sys.argv[1])
-num_duty_per_job = 10
+num_duty_per_job = 5
 
 end_num = job_num_seed * num_duty_per_job
 start_num = end_num - (num_duty_per_job - 1)
