@@ -29,8 +29,10 @@ for job_num in range(start_num, end_num+1):
     epsilon = 0.0000000001
 
     # define parameters
-    kappa_1 = 1
-    kappa_2 = 1
+    # kappa_1 = 1
+    # kappa_2 = 1
+    kappa_1 = 0.6
+    kappa_2 = 0.6
     alpha = 1
     beta = 0.5
     gamma = 0.2
