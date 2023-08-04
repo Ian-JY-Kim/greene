@@ -15,7 +15,7 @@ from itertools import product
 
 # get the job number from the slurm
 job_num_seed = int(sys.argv[1])
-num_duty_per_job = 25
+num_duty_per_job = 14
 
 end_num = job_num_seed * num_duty_per_job
 start_num = end_num - (num_duty_per_job - 1)
@@ -33,8 +33,8 @@ for job_num in range(start_num, end_num+1):
     # kappa_2 = 1
     # kappa_1 = 0.6
     # kappa_2 = 0.6
-    kappa_1 = 0.3
-    kappa_2 = 0.5
+    kappa_1 = 0.4
+    kappa_2 = 0.4
     alpha = 1
     beta = 0.5
     gamma = 0.2
@@ -206,7 +206,7 @@ for job_num in range(start_num, end_num+1):
 
     try:
         initial_point = [0,0]
-        bnds = ((-2.0, 2.0), (-2.0, 2.0))
+        bnds = ((-1.5, 1.5), (-1.5, 1.5))
         res = minimize(min_obj, initial_point, args = sample_data.values[0][0:4], method="Nelder-Mead", bounds=bnds, options = {'maxiter': 300})
 
         # save the result
