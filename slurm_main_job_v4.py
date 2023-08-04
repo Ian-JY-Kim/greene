@@ -15,7 +15,7 @@ from itertools import product
 
 # get the job number from the slurm
 job_num_seed = int(sys.argv[1])
-num_duty_per_job = 5
+num_duty_per_job = 25
 
 end_num = job_num_seed * num_duty_per_job
 start_num = end_num - (num_duty_per_job - 1)
@@ -34,13 +34,13 @@ for job_num in range(start_num, end_num+1):
     # kappa_1 = 0.6
     # kappa_2 = 0.6
     kappa_1 = 0.4
-    kappa_2 = 0.5
+    kappa_2 = 0.4
     alpha = 1
     beta = 0.5
     gamma = 0.2
 
     # define mu of xi's 
-    mu_xi_1 = 0
+    mu_xi_1 = 0.1
     mu_xi_2 = 0
 
     # get the working data    
