@@ -119,8 +119,8 @@ for job_num in range(start_num, end_num+1):
         prob_good = 1/2
         prob_bad = 1/2
         #calculate monopoly profit
-        pi_mono_good = monopoly(x, w, xi, -0.5)[0]
-        pi_mono_bad  = monopoly(x, w, xi,  0.5)[0]
+        pi_mono_good = monopoly(x, w, xi, -0.05)[0]
+        pi_mono_bad  = monopoly(x, w, xi,  0.35)[0]
         #return expected monopoly profit
         return prob_good*pi_mono_good + prob_bad*pi_mono_bad
 
