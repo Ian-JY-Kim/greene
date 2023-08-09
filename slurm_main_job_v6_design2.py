@@ -34,7 +34,7 @@ for job_num in range(start_num, end_num+1):
     # kappa_1 = 0.6
     # kappa_2 = 0.6
     kappa_1 = 0.5
-    kappa_2 = 0.5
+    kappa_2 = 1
     alpha = 0.5
     beta = 1
     gamma = 0.5
