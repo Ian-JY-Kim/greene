@@ -141,8 +141,8 @@ for job_num in range(start_num, end_num+1):
             height4 = (1/2)*(trapz_fun4[i] + trapz_fun4[i-1])
             height = (1/4)*(height1+height2+height3+height4)
             trapz_sum += delta_x * height
-        
-        return trapz_sum 
+        prob_f2_in  = 1 - norm.cdf(xi_2_star, loc = mu_xi_2, scale = sigma_xi_2)
+        return (1/prob_f2_in)*trapz_sum 
 
     def EXP_pi_duo_f2_trapz(x_1, x_2, w_1, w_2, xi_1_star, xi_2):
         xi_1_vec = np.linspace(xi_1_star, 3 + mu_xi_1, 100)
@@ -161,8 +161,8 @@ for job_num in range(start_num, end_num+1):
             height4 = (1/2)*(trapz_fun4[i] + trapz_fun4[i-1])
             height = (1/4)*(height1+height2+height3+height4)
             trapz_sum += delta_x * height
-        
-        return trapz_sum 
+        prob_f1_in  = 1 - norm.cdf(xi_1_star, loc = mu_xi_1, scale = sigma_xi_1)
+        return (1/prob_f1_in)*trapz_sum 
 
 
 
